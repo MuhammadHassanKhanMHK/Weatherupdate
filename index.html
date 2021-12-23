@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body style="overflow-y: hidden;">
+    <div style="    background: url(https://images.pexels.com/photos/1438761/pexels-photo-1438761.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940) no-repeat center;
+                    background-size: cover;
+                    height: 100vh;
+                    display: flex;
+                    align-items: center;
+                    align-content: center;
+                    text-align: center;
+                    justify-content: center;">
+
+
+        <div style="width: 50% ;border: 1px solid rgb(20, 18, 18)
+                ;background: url(https://images.pexels.com/photos/3888585/pexels-photo-3888585.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260) no-repeat center;
+                border-radius: 10px;
+                padding: 50px 10px;">
+            <H1 style="color: rgb(1, 0, 3);">Weather Temprature Checker</H1>
+            <H1 style="color: rgb(0, 0, 0);">Select Your City</H1>
+            <h1 style="color: rgb(0, 0, 0);">For Example Karahi, Lahore, Gilgit,Thar</h1>
+
+
+            <h1 style="color: rgb(15, 9, 46);">City Name: <input "type="text" id="cityName" placeholder="Enter your city name :"></h1>
+            <br>
+            <button  onclick="think()">Think</button>
+
+            <h1 id="result" style="background-color: rgb(196, 223, 43);"></h1>
+        </div>
+
+
+    </div>
+    <script>
+
+
+
+        function think() {
+
+            let cityName = document.getElementById("cityName").value
+
+            // Make a request for a user with a given ID  
+            axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=cee47efdb336b5b358938f2939e92209&units=metric`)
+                .then(function (response) {
+                    let temp = response.data.main.temp
+                    let minTemp = response.data.main.temp_min
+                    let maxTemp = response.data.main.temp_max
+                    var result = document.getElementById("result");
+
+                    console.log("result: ", result);
+
+                    if ((temp < -10) || (minTemp < -10)) {
+
+                        result.innerText = `Dont go out its too cold : ${temp} C`;
+
+                    } else if (temp > 35 || maxTemp > 35) {
+
+                        result.innerText = `Dont go outside its too hot :${temp} C`;
+
+                    } else if (
+                        (temp >= -10 && temp <= 5) ||
+                        (minTemp >= -10 && minTemp <= 5)
+                    ) {
+
+                        result.innerText = `Carry coat and be care full : ${temp} C`;
+
+                    } else if (
+                        (temp > 5 && temp <= 20)
+                        || (minTemp > 5 && minTemp <= 20)
+                    ) {
+
+                        result.innerText = `Carry jacket with you  :${temp} C`;
+
+                    }
+
+                    else if (temp > 20 && temp <= 35) {
+
+                        result.innerText = `Dont carry jacket :  ${temp} C`;
+
+                    }
+
+                })
+                .catch(function (error) {
+                    // handle error
+                    console.log(error);
+                })
+
+
+
+
+            // var result = document.getElementById("result");
+            // // var maxTemp = 25;
+            // var perp = 25; // 0 - 100
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+</body>
+
+</html>
